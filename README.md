@@ -10,7 +10,11 @@ The `directory_for_output` will contain all attachements from the PST file and a
 ```json
 [
     {
-        "attachment_filepath": "<filepath>", 
+        "attachment_filepaths": [
+            "<filepath1>",
+            "<filepath2>",
+            ...
+        ],
         "body": "Lorem Ipsum ...", 
         "from": "example@test.com", 
         "subject": "Email Subject", 

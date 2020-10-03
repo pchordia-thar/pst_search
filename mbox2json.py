@@ -13,11 +13,12 @@ def jsonify_message(msg):
     # Map in fields from the message
     parsed_msg = dict([(k, v) for (k, v) in msg.items()])
     jsonified_msg = {
-        'subject': parsed_msg['Subject'],
-        'from': parsed_msg['From'],
-        'to': parsed_msg['To'],
+        'subject': parsed_msg.get('Subject'),
+        'from': parsed_msg.get('From'),
+        'to': parsed_msg.get('To'),
+        'attachment_filepaths': [],
     }
-    message_id = parsed_msg['X-MS-Exchange-CrossTenant-Network-Message-Id']
+    message_id = parsed_msg.get('X-MS-Exchange-CrossTenant-Network-Message-Id')
 
     parts = [p for p in msg.walk()]
     for part in parts:
@@ -42,7 +43,7 @@ def jsonify_message(msg):
             outfile = open(saved_filename, "wb")
             outfile.write(attachment_as_base64.decode('base64'))
             outfile.close()
-            jsonified_msg['attachment_filepath'] = saved_filename
+            jsonified_msg['attachment_filepaths'].append(saved_filename)
     return jsonified_msg
 
 
